@@ -11,7 +11,7 @@ from typing import Optional, List
 import os
 from dotenv import load_dotenv
 import html
-
+TOKEN_TYPE = os.getenv("TOKEN_TYPE", "bearer")
 load_dotenv()
 
 SECRET_KEY = os.getenv("SECRET_KEY")
@@ -167,7 +167,7 @@ def login(user: UserLogin, db: Session = Depends(get_db)):
         raise HTTPException(status_code=401, detail="Неверные учетные данные")
     
     token = create_access_token(data={"sub": db_user.username})
-    return Token(access_token=token, token_type="bearer")
+    return Token(access_token=token, token_type=TOKEN_TYPE)
 
 @app.get("/api/data", response_model=List[PublicationOut])
 def get_publications(
@@ -273,4 +273,5 @@ def root():
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    host = os.getenv("HOST", "127.0.0.1")
+    uvicorn.run(app, host=host, port=8000)

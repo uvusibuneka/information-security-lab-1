@@ -1,23 +1,33 @@
-name: CI/CD Pipeline
+name: CI/CD Security Pipeline
 
-on: [push, pull_request]
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
 
 jobs:
-  test:
+  security-scan:
     runs-on: ubuntu-latest
+    
     steps:
-      - uses: actions/checkout@v3
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.10'
-      - name: Install dependencies
-        run: |
-          pip install -r requirements.txt
-          pip install bandit safety pytest
-      - name: Run SAST (Bandit)
-        run: bandit -r . -f json -o bandit-report.json || true
-      - name: Run SCA (Safety)
-        run: safety check --json > safety-report.json || true
-      - name: Run tests
-        run: pytest -v
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+        
+    - name: Run Bandit SAST
+      run: |
+        pip install bandit
+        bandit -r . -f txt
+        
+    - name: Run OWASP Dependency-Check
+      uses: dependency-check/Dependency-Check_Action@main
+      with:
+        project: 'information-security-lab-1'
+        path: '.'
+        format: JSON
+        args: '--scan . --disableOssIndex --prettyPrint'

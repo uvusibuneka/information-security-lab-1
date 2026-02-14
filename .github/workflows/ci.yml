@@ -29,7 +29,7 @@ jobs:
       with:
         project: 'information-security-lab-1'
         path: '.'
-        format: 'HTML, JSON'
+        format: 'HTML'
         args: '--scan . --disableOssIndex --prettyPrint'
 
     - name: Upload Bandit Report

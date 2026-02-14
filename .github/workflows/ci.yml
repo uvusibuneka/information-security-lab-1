@@ -22,12 +22,24 @@ jobs:
     - name: Run Bandit SAST
       run: |
         pip install bandit
-        bandit -r . -f txt
+        bandit -r . -f html -o bandit-report.html
         
     - name: Run OWASP Dependency-Check
       uses: dependency-check/Dependency-Check_Action@main
       with:
         project: 'information-security-lab-1'
         path: '.'
-        format: JSON
+        format: 'HTML, JSON'
         args: '--scan . --disableOssIndex --prettyPrint'
+
+    - name: Upload Bandit Report
+      uses: actions/upload-artifact@v4
+      with:
+        name: bandit-report
+        path: bandit-report.html
+
+    - name: Upload Dependency-Check Report
+      uses: actions/upload-artifact@v4
+      with:
+        name: dependency-check-report
+        path: reports/

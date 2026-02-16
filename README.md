@@ -228,8 +228,8 @@ class PublicationOut(BaseModel):
 ```
 
 ## Отчёт bandit
-<img width="1240" height="691" alt="image" src="https://github.com/user-attachments/assets/4a1676a7-f256-4036-97dd-b2ce366e4e80" />
-
+<img width="1146" height="569" alt="image" src="https://github.com/user-attachments/assets/20be7df5-2102-4ef6-96d0-58a99ef47604" />
 
 ## Отчёт OWASP Dependency Check
-<img width="1397" height="795" alt="image" src="https://github.com/user-attachments/assets/73946603-b925-4d99-a3c5-4df41fc4b81b" />
+<img width="1120" height="991" alt="image" src="https://github.com/user-attachments/assets/32b13a7d-79ea-4a07-8ba2-8b5b9d89bd3b" />
+
